@@ -19,6 +19,7 @@ int main() {
     dl->print();
     std::cout << "\nSorted:\n";
     dl->BubleSort();
+    //dl->BubleSortConUnCambioLeve();
     dl->print();
     delete dl;
 

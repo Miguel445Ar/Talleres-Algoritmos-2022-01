@@ -158,6 +158,23 @@ namespace DataStructures {
                 aux2 = aux2->back;
             }
         }
+        void BubleSortConUnCambioLeve(){
+            Node* aux1 = head;
+            if(!aux1) return;
+            Node* aux2 = head->next;
+            while(aux1 != nullptr && aux2 != nullptr){
+                if(compare(aux1->value,aux2->value)){
+                    aux1 = aux1->next;
+                    aux2 = aux2->next;
+                    continue;
+                }
+                this->swap(aux1,aux2);
+                if(!aux1->back)
+                    continue;
+                aux1 = aux1->back;
+                aux2 = aux2->back;
+            }
+        }
     private:
         void swap(Node* v1, Node* v2){
             T c = v1->value;
