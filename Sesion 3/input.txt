@@ -1,0 +1,1 @@
+Samsung|Rojo|Led|32.0|1500,AOC|Verde|Plasma|45.0|2500,LG|Negro|Led|50.0|3000,Huawei|Blanco|Led|48.0|2700,Samsung|Negro|Led|40.0|1800,Panasonic|Negro|Led|55.0|3500,Toshiba|Amarillo|Plasma|32.0|1200,Xiamoi|Blanco|Led|40.0|2100,Samsung|Rojo|Led|70.0|4500,AOC|Negro|Led|40.0|1900
