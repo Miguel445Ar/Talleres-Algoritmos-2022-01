@@ -18,12 +18,14 @@ using std::stod;
 
 template<class T>
 class List {
+public:
     class Node {
     public:
         T value; // Valor del nodo
         Node* next; //  Puntero al siguiente nodo
         Node(T value, Node* next = nullptr) : value(value), next(next) {}
     };
+private:
     Node* inicio;
     Node* fin;
     unsigned long size;
@@ -34,12 +36,6 @@ public:
         size = 0;
     }
     ~List() {
-        while (size > 0) {
-            popFront();
-        }
-        inicio = fin = nullptr;
-    }
-    void eraseAll() {
         while (size > 0) {
             popFront();
         }
@@ -85,10 +81,10 @@ public:
     unsigned long Size() {
         return size;
     }
-    Node* insertInRange(function<void(T)> insert, int i, int f, Node* n){
+    Node* insertInRange(function<void(T)> insert, int i, int f, Node* n) {
         size_t init = i;
-        Node* aux = n;
-        for(init; init <= f; ++init){
+        Node* aux = (!n) ? this->inicio : n;
+        for (init; init <= f; ++init) {
             insert(aux->value);
             aux = aux->next;
         }
@@ -111,45 +107,96 @@ public:
     }
 };
 
+
 class Solution {
     List<Televisor>* items;
+    function<void(Televisor)> show;
 public:
-    Solution(){
-        auto show = [](Televisor value) -> void {
-            cout << value.mostrar() << "-->";
+    Solution() {
+        this->show = [](Televisor value) -> void {
+            std::cout << value.mostrar() << "-->";
         };
-        this->items = new List<Televisor>(show);
+        this->items = new List<Televisor>(this->show);
     }
-    void read(int k) {
+    ~Solution() {
+        delete items;
+    }
+    void read() {
         string line = "";
         ifstream arch("input.txt");
-        while(getline(arch,line,',')){
+        while (getline(arch, line, ',')) {
             stringstream s(line);
             string aux;
             string marca, color, tecnologia;
             double pulgadas;
             size_t precio;
-            getline(s,aux,'|');
+            getline(s, aux, '|');
             marca = aux;
-             getline(s,aux,'|');
-             color = aux;
-             getline(s,aux,'|');
+            getline(s, aux, '|');
+            color = aux;
+            getline(s, aux, '|');
             tecnologia = aux;
-             getline(s,aux,'|');
+            getline(s, aux, '|');
             pulgadas = stod(aux);
-             getline(s,aux,'|');
+            getline(s, aux, '|');
             precio = stoi(aux);
-            Televisor t(marca,color,tecnologia,pulgadas,precio);
+            Televisor t(marca, color, tecnologia, pulgadas, precio);
             items->pushBack(t);
         }
         arch.close();
         items->print();
+        cout << "\nSize: " << items->Size() << "\n";
+    }
+    void partitionList(int k){
+
+        function<void(List<Televisor>*)> showResult = [](List<Televisor>* value) -> void {
+            cout << "\n";
+            value->print();
+            cout << "\nSub List size: " << value->Size() << "\n";
+        };
+        List<List<Televisor>*>* result = new List<List<Televisor>*>(showResult);
+
+
+        size_t size = this->items->Size();
+        int res = size % k;
+        size_t partitionSize = size / k;
+        if(size == res) {
+            List<Televisor>::Node* ptr = nullptr;
+            for(size_t i = 0; i < size; ++i){
+                List<Televisor>* aux = new List<Televisor>(this->show);
+                ptr = this->items->insertInRange([&aux](Televisor t) -> void {
+                    aux->pushBack(t);
+                }, i, i, ptr);
+                result->pushBack(aux);
+            }
+            size_t dif = k - size;
+            for(size_t i = 0; i < dif; ++i)
+                result->pushBack(new List<Televisor>(this->show));
+            result->print();
+            delete result;
+            return;
+        }
+        List<Televisor>::Node* ptr = nullptr;
+        size_t pos = 0;
+        for(size_t i = 0; i < k; ++i){
+            List<Televisor>* aux = new List<Televisor>(this->show);
+            size_t end = pos + (partitionSize - 1) + (res > 0)?1:0;
+            ptr = this->items->insertInRange([&aux](Televisor t) -> void {
+                aux->pushBack(t);
+            }, pos, end, ptr);
+            result->pushBack(aux);
+            --res;
+        }
+        result->print();
+        delete result;
     }
 };
 
 
 int main() {
-    Solution sol;
-    sol.read(8);
+    Solution* sol = new Solution;
+    sol->read();
+    sol->partitionList(8);
+    delete sol;
     return 0;
 }

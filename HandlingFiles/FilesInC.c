@@ -5,8 +5,7 @@
 
 // Un dato cualquiera
 
-typedef struct Foo
-{
+typedef struct Foo {
     int x, y;
     char msg[100];
 } Foo;
@@ -92,7 +91,29 @@ bool readFromBinary(const char* fileName){ // No funciona bien si ponemos const 
 
 
 // Plain text operations
-// Pronto... pero es muc
+
+bool readTxt(){
+    FILE* inputFile;
+    fopen_s(&inputFile, "CPlainTextFile.txt", "r");
+    if( inputFile == NULL)
+        return false;
+    for(size_t i = 0; i < 3; ++i){
+        Foo f;
+        fscanf(inputFile,"%d, %d, %s\n", &f.x, &f.y, f.msg);
+        printf("\nData read is {%d, %d, %s}\n",f.x, f.y, f.msg);
+    }
+    fclose(inputFile);
+    return true;
+}
+
+void writeInTxt() {
+    Foo array[] = { {1,2, "Hi"}, {3,4,"My_Name"}, {5,6,"Miguel"}};
+    FILE* outputFile;
+    fopen_s(&outputFile,"CPlainTextFile.txt", "w");
+    for(size_t i = 0; i < 3; ++i)
+        fprintf(outputFile,"%d, %d, %s\n", array[i].x, array[i].y, array[i].msg);
+    fclose(outputFile);
+}
 
 int main() {
     Foo data = {5,6,"Hola desde un archivo binario"}; // Constructor implícito en C, también existe C++
@@ -105,5 +126,9 @@ int main() {
 
     if(readingResult) printf("\nSe leyó con éxito :D");
     else printf("\nAlgo salió mal en la lectura :(");
+
+    // Writing in Txt in C
+    writeInTxt();
+    readTxt();
     return 0;
 }

@@ -36,7 +36,7 @@ void print(Node* head){
     cout << "nullptr\n";
 }
 
-/*
+
 int main() {
     Node* head = new Node(8);
     head->next = new Node(7);
@@ -54,4 +54,4 @@ int main() {
     print(head);
     cout << "\n The 3rd value from the end is: " << getKthFromTheEnd(head,5);
     return 0;
-}*/
+}
