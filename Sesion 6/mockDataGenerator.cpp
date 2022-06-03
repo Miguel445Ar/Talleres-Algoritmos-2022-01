@@ -1,9 +1,8 @@
-
-/*#include <iostream>
+/*
+#include <iostream>
 #include <string>
 #include <fstream>
 #include "utils.hpp"
-
 
 
 class Person {
@@ -38,9 +37,11 @@ public:
 };
 
 
+
 int main() {
+    srand(time(0));
     PersonRepository* repo = new PersonRepository("output.txt");
-    repo->generateAndSaveMockData(100);
+    repo->generateAndSaveMockData(10);
     delete repo;
     return 0;
 }*/

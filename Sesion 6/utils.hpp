@@ -291,9 +291,10 @@ private:
         Node* root;
         size_t size;
         std::function<bool(K,K)> compare;
+        std::function<bool(K,K)> equals;
         std::function<void(T)> show;
     public:
-        BinarySearchTree(std::function<bool(K,K)> compare, std::function<void(T)> show): compare(compare), show(show) {
+        BinarySearchTree(std::function<bool(K,K)> compare, std::function<void(T)> show, std::function<bool(K,K)> equals): compare(compare), show(show), equals(equals) {
             root = nullptr;
             size = 0;
         }
@@ -301,6 +302,7 @@ private:
             Node* aux = root;
             if(!root) {
                 root = new Node(Entity(key,value));
+                ++size;
                 return;
             }
             while (true) {
@@ -323,6 +325,20 @@ private:
         }
         void display() {
             this->_display(this->root);
+        }
+        T getByKey(K key) {
+            Node* aux = root;
+            if(aux->value.key == key)
+                return aux->value.value;
+            while(true) {
+                if(!aux) return T();
+                if(equals(key, aux->value.key))
+                    return aux->value.value;
+                if(compare(key, aux->value.key))
+                    aux = aux->left;
+                else
+                    aux = aux->right;
+            }
         }
     private:
         void _display(Node* n) {
