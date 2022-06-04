@@ -2,6 +2,7 @@
 #include "utils.hpp"
 
 using DataStructures::BinarySearchTree;
+using DataStructures::DoubleLinkedList;
 
 class Person {
     uint32_t code;
@@ -32,5 +33,17 @@ int main() {
     bst->insert(10,Person(123,45,"Eduardo"));
     std::cout << "\nThe value is " << bst->getByKey(8) << "\n";
     bst->display();
+    DoubleLinkedList<Person>* dll = new DoubleLinkedList<Person>(
+        [](Person a) -> void {
+            std::cout << a << "-->";
+        }
+    );
+    std::function<void(Person)> insertToCollection = [&dll] (Person p) -> void {
+        dll->pushBack(p);
+    };
+    std::cout << "\nThe Double linked list\n";
+    bst->insertToCollection(insertToCollection);
+    dll->print();
+    delete dll;
     delete bst;
 }

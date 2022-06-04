@@ -340,12 +340,21 @@ private:
                     aux = aux->right;
             }
         }
+        void insertToCollection(std::function<void(T)> insertToCollection) {
+            _insertToCollection(root, insertToCollection);
+        }
     private:
         void _display(Node* n) {
             if(!n) return;
             show(n->value.value);
             _display(n->left);
             _display(n->right);
+        }
+        void _insertToCollection(Node* n, std::function<void(T)> insertToCollection) {
+            if(!n) return;
+            insertToCollection(n->value.value);
+            _insertToCollection(n->left, insertToCollection);
+            _insertToCollection(n->right, insertToCollection);
         }
     };
 }
