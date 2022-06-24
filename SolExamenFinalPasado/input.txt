@@ -1,0 +1,4 @@
+UTTCUC ébola T1
+TCUTC gripe_aviar T2
+CTUTCTUCCCUTT sars T3
+CTUTCTUCCUCTT mers-Cov T3 
