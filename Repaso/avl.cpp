@@ -265,6 +265,7 @@ public:
     }
 };
 
+/*
 auto main() -> int {
     srand(100);
     auto compare = [](int a, int b) -> bool { return a < b; };
@@ -324,7 +325,6 @@ auto main() -> int {
     cout << "\n";
     avl->print();
     cout << "\nHeight: " << avl->height() << "\n";
-    */
     delete avl;
     return 0;
-}
+}*/

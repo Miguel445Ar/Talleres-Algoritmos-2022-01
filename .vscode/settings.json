@@ -53,6 +53,8 @@
         "queue": "cpp",
         "stack": "cpp",
         "fstream": "cpp",
-        "sstream": "cpp"
+        "sstream": "cpp",
+        "map": "cpp",
+        "xtree": "cpp"
     }
 }
