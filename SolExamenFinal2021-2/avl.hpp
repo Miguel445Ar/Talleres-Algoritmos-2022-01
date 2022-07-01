@@ -246,25 +246,23 @@ private:
             return -1;
         return max(_height(node->left), _height(node->right)) + 1;
     }
-    void _find(Node* node, T value){
+    void _find(Node* node, T value, std::function<void(T)> insertEmployees){
         if(!node)
             return;
         if(equals(value,node->v)){
-            for(auto elem: node->values){
-                show(elem);
-            }
+            insertEmployees(node->v);
            return;
         }
         if(compare(value,node->v))
-            _find(node->left,value);
-        else _find(node->right,value);
+            _find(node->left,value, insertEmployees);
+        else _find(node->right,value, insertEmployees);
     }
 public:
     int height(){
         return _height(root);
     }
-    void find(T value){
-        _find(root,value);
+    void find(T value, std::function<void(T)> insertEmployees){
+        _find(root,value, insertEmployees);
     }
 };
 
